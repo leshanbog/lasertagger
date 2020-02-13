@@ -58,7 +58,7 @@ flags.DEFINE_string(
     "exporting, one can optionally provide path to a particular checkpoint to "
     "be exported here.")
 flags.DEFINE_integer(
-    "max_seq_length", 128,
+    "max_seq_length", 256,
     "The maximum total input sequence length after WordPiece tokenization. "
     "Sequences longer than this will be truncated, and sequences shorter than "
     "this will be padded.")

@@ -48,11 +48,11 @@ flags.DEFINE_string(
     'vocabulary is optimized (see `input_format` flag and utils.py for '
     'documentation).')
 flags.DEFINE_enum(
-    'input_format', None, ['wikisplit', 'discofuse'],
+    'input_format', None, ['wikisplit', 'discofuse', 'ria'],
     'Format which indicates how to parse the `input_file`. See utils.py for '
     'documentation on the different formats.')
 flags.DEFINE_integer(
-    'max_input_examples', 50000,
+    'max_input_examples', 1000000,
     'At most this many examples from the `input_file` are used for optimizing '
     'the vocabulary.')
 flags.DEFINE_string(
@@ -60,8 +60,8 @@ flags.DEFINE_string(
     'Path to the resulting file with all possible tags. Coverage numbers will '
     'be written to a separate file which has the same path but ".log" appended '
     'to it.')
-flags.DEFINE_bool('enable_swap_tag', True, 'Whether to enable the SWAP tag.')
-flags.DEFINE_integer('vocabulary_size', 500,
+flags.DEFINE_bool('enable_swap_tag', False, 'Whether to enable the SWAP tag.')
+flags.DEFINE_integer('vocabulary_size', 4096,
                      'Number of phrases to include in the vocabulary.')
 flags.DEFINE_integer(
     'num_extra_statistics', 100,

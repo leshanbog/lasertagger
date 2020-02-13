@@ -185,7 +185,8 @@ class BertExampleBuilder(object):
         labels_mask=labels_mask,
         token_start_indices=token_start_indices,
         task=task,
-        default_label=self._keep_tag_id)
+       #default_label=self._keep_tag_id)
+        default_label=self._label_map['DELETE'])
     example.pad_to_max_length(self._max_seq_length, self._pad_id)
     return example
 
