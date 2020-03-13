@@ -45,9 +45,10 @@ def calc_legacy_rouge(refs, hyps, directory="eval"):
 
 def calc_metrics(refs, hyps):
     print("Count:", len(hyps))
-    print('Text:', data['text'].iloc[-1])
-    print("Ref:", refs[-1])
-    print("Hyp:", hyps[-1])
+    pos = random.randint(0, 1000)
+    print('Text:', data['text'].iloc[pos])
+    print("Ref:", refs[pos])
+    print("Hyp:", hyps[pos])
     
 
     from nltk.translate.bleu_score import corpus_bleu
@@ -65,6 +66,10 @@ data = data.dropna()
 print('Result:\n')
 refs = list(data['true'])
 hyps = list(data['pred'])
+refs = [el.replace(' ##', '') for el in refs]
+hyps = [el.replace(' ##', '') for el in hyps]
+
+print('Some hyps:\n', hyps[5:10])
 
 print(calc_metrics(refs, hyps))
 

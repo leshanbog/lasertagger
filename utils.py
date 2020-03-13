@@ -26,6 +26,10 @@ from bs4 import BeautifulSoup
 from typing import Iterator, Mapping, Sequence, Text, Tuple
 
 import tensorflow as tf
+import transformers
+
+BERT_TOKENIZER = transformers.BertTokenizer.from_pretrained(
+          r'/data/alolbuhtijarov/model/rubert_cased_L-12_H-768_A-12_v2')
 
 
 def get_token_list(text):
@@ -38,7 +42,7 @@ def get_token_list(text):
   Args:
     text: String to be split into tokens.
   """
-  return text.split()
+  return BERT_TOKENIZER.tokenize(text)
 
 
 def yield_sources_and_targets(
@@ -75,7 +79,7 @@ def _yield_ria_examples(input_file):
       clean_text = BeautifulSoup(text, 'html.parser').text.replace('\xa0', ' ').replace('\n', ' ')
       if len(clean_text) < 10 or not title:
         continue
-      clean_text = ' '.join(clean_text.split()[:256])
+      clean_text = ' '.join(clean_text.split()[:70])
       yield [clean_text], title
 
 
@@ -86,7 +90,7 @@ def _yield_wikisplit_examples(
   with tf.io.gfile.GFile(input_file) as f:
     for line in f:
       source, target = line.rstrip('\n').split('\t')
-      source = ' '.join(source.split()[:256])
+      source = ' '.join(source.split()[:70])
       yield [source], target
 
 
