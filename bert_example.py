@@ -201,17 +201,9 @@ class BertExampleBuilder(object):
       3-tuple with the split tokens, split labels, and the indices of the
       WordPieces that start a token.
     """
-    bert_tokens = []  # Original tokens split into wordpieces.
-    bert_labels = []  # Label for each wordpiece.
-    # Index of each wordpiece that starts a new token.
-    token_start_indices = []
-    for i, token in enumerate(tokens):
-      # '+ 1' is because bert_tokens will be prepended by [CLS] token later.
-      token_start_indices.append(len(bert_tokens) + 1)
-      pieces = self._tokenizer.tokenize(token)
-      bert_tokens.extend(pieces)
-      bert_labels.extend([labels[i]] * len(pieces))
-    return bert_tokens, bert_labels, token_start_indices
+    assert len(tokens) == len(labels)
+    return tokens, labels, list(range(1, len(tokens) + 1))
+
 
   def _truncate_list(self, x):
     """Returns truncated version of x according to the self._max_seq_length."""

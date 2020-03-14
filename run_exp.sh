@@ -25,7 +25,7 @@ python3 helpers/glue_phrases_script.py model/label_map.txt model/label_map.txt;
 python3 preprocess_main.py --input_file="$TRAIN_DATASET_PREPROC" --input_format="$FORMAT_PREPROC" --output_tfrecord=model/train.tf_record --label_map_file=model/label_map.txt --vocab_file="$BERT_DIR"/vocab.txt --output_arbitrary_targets_for_infeasible_examples=false;
 
 
-python3 run_lasertagger.py --training_file=model/train.tf_record --label_map_file=model/label_map.txt --model_config_file=configs/lasertagger_config.json --output_dir="$OUTPUT_DIR" --do_train=true --num_train_epochs=5 --train_batch_size=16 --num_train_examples=$(cat model/train.tf_record.num_examples.txt) --init_checkpoint="$BERT_DIR"/bert_model.ckpt --save_checkpoints_steps=30000;
+python3 run_lasertagger.py --training_file=model/train.tf_record --label_map_file=model/label_map.txt --model_config_file=configs/lasertagger_config.json --output_dir="$OUTPUT_DIR" --do_train=true --num_train_epochs=5 --train_batch_size=8 --num_train_examples=$(cat model/train.tf_record.num_examples.txt) --init_checkpoint="$BERT_DIR"/bert_model.ckpt --save_checkpoints_steps=30000;
 
 
 python3 run_lasertagger.py --label_map_file=model/label_map.txt --model_config_file=configs/lasertagger_config.json --output_dir="$OUTPUT_DIR" --do_export=true --export_path="$OUTPUT_DIR"/export;
