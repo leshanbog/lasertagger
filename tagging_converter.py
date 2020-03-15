@@ -50,7 +50,7 @@ class TaggingConverter(object):
     # Set of tokens that are part of a phrase in self.phrase_vocabulary.
     self._token_vocabulary = set()
     for phrase in self._phrase_vocabulary:
-      tokens = utils.get_token_list(phrase)
+      tokens = phrase.split() 
       self._token_vocabulary |= set(tokens)
       if len(tokens) > self._max_added_phrase_length:
         self._max_added_phrase_length = len(tokens)
@@ -160,7 +160,12 @@ class TaggingConverter(object):
       added_phrase += (' ' if added_phrase else '') + target_token
       next_target_token_idx = target_token_idx + num_added_tokens
       if next_target_token_idx >= len(target_tokens):
-        break
+        if added_phrase in self._phrase_vocabulary:
+          res = tagging.Tag('DELETE')
+          res.added_phrase = added_phrase
+          return res, next_target_token_idx
+        else:
+          break
       target_token = target_tokens[next_target_token_idx].lower()
       if (source_token == target_token and
           added_phrase in self._phrase_vocabulary):
